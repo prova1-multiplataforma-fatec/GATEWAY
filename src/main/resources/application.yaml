@@ -1,0 +1,91 @@
+spring:
+  application:
+    name: api-gateway
+  main:
+    allow-bean-definition-overriding: true
+
+  cloud:
+    discovery:
+      client:
+        simple:
+          instances:
+            produtos:
+              - uri: http://127.0.0.1:8081
+              - uri: http://127.0.0.1:8082
+            clientes:
+              - uri: http://127.0.0.1:8083
+              - uri: http://127.0.0.1:8084
+            auth:
+              - uri: http://127.0.0.1:8085
+              - uri: http://127.0.0.1:8086
+    loadbalancer:
+      retry:
+        enabled: true
+        max-retries-on-same-service-instance: 0
+        max-retries-on-next-service-instance: 2
+    gateway:
+      routes:
+        - id: api-produtos
+          uri: lb://produtos
+          predicates:
+            - Path=/api-produtos/**
+          filters:
+            - StripPrefix=1
+            - name: Retry
+              args:
+                retries: 3
+                statuses: BAD_GATEWAY, GATEWAY_TIMEOUT, SERVICE_UNAVAILABLE
+                backoff:
+                  firstBackoff: 1000
+                  maxBackoff: 10000
+                  factor: 2
+                  basedOnPreviousValue: true
+
+        - id: api-clientes
+          uri: lb://clientes
+          predicates:
+            - Path=/api-clientes/**
+          filters:
+            - StripPrefix=1
+            - name: Retry
+              args:
+                retries: 3
+                statuses: BAD_GATEWAY, GATEWAY_TIMEOUT, SERVICE_UNAVAILABLE
+                backoff:
+                  firstBackoff: 1000
+                  maxBackoff: 10000
+                  factor: 2
+                  basedOnPreviousValue: true
+
+        - id: api-auth
+          uri: lb://auth
+          predicates:
+            - Path=/api-auth/**
+          filters:
+            - StripPrefix=1
+            - name: Retry
+              args:
+                retries: 3
+                statuses: BAD_GATEWAY, GATEWAY_TIMEOUT, SERVICE_UNAVAILABLE
+                backoff:
+                  firstBackoff: 1000
+                  maxBackoff: 10000
+                  factor: 2
+                  basedOnPreviousValue: true
+
+cors:
+  allowed-origins:
+    - http://localhost:8080
+    - http://localhost:8081
+    - http://localhost:8082
+    - http://localhost:8083
+    - http://localhost:8084
+    - http://localhost:8085
+    - http://localhost:8086
+
+server:
+  port: 8080
+
+security:
+  jwt:
+    secret: "asdfasdfasdf"
