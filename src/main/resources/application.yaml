@@ -1,28 +1,23 @@
 spring:
   application:
     name: api-gateway
-  main:
-    allow-bean-definition-overriding: true
 
   cloud:
+    compatibility-verifier:
+      enabled: false
     discovery:
       client:
         simple:
           instances:
             produtos:
               - uri: http://127.0.0.1:8081
-              - uri: http://127.0.0.1:8082
+              # - uri: http://127.0.0.1:8082
             clientes:
               - uri: http://127.0.0.1:8083
-              - uri: http://127.0.0.1:8084
+              # - uri: http://127.0.0.1:8084
             auth:
               - uri: http://127.0.0.1:8085
-              - uri: http://127.0.0.1:8086
-    loadbalancer:
-      retry:
-        enabled: true
-        max-retries-on-same-service-instance: 0
-        max-retries-on-next-service-instance: 2
+              # - uri: http://127.0.0.1:8086    
     gateway:
       routes:
         - id: api-produtos
@@ -88,4 +83,4 @@ server:
 
 security:
   jwt:
-    secret: "asdfasdfasdf"
+    secret: "ajsdfkldsajflkjsdalfhsdakjlhfjaksdhfkjlasdhfkjlhasdljkfhsadjklhfsdkjah"

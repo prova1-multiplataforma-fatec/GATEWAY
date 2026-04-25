@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.13</version>
+		<version>3.3.0</version>
 		<relativePath />
 	</parent>
 	<groupId>io.github.fatec</groupId>
@@ -16,7 +16,7 @@
 
 	<properties>
 		<java.version>17</java.version>
-		<spring-cloud.version>2025.0.2</spring-cloud.version>
+		<spring-cloud.version>2023.0.1</spring-cloud.version>
 	</properties>
 
 	<dependencies>
@@ -47,8 +47,8 @@
 		</dependency>
 
 		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-      		<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
 		</dependency>
 
 	</dependencies>
